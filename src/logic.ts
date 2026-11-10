@@ -2,16 +2,10 @@
 export type Intention = { text: string; kept: boolean };
 export type IntentionsByDay = Record<string, Intention>;
 
-export const SUGGESTIONS = [
-  'Be patient with myself',
-  'Listen more than I talk',
-  'Take a real break at lunch',
-  'Finish one thing before starting the next',
-  'Move my body for 20 minutes',
-  'Say thank you to someone',
-  'Put the phone away at dinner',
-  'Go to bed on time',
-];
+import { t, type Key } from './i18n/index.svelte';
+
+// The suggestion keys; the text is read in the app's language when it is shown
+export const SUGGESTIONS: Key[] = ['sug1', 'sug2', 'sug3', 'sug4', 'sug5', 'sug6', 'sug7', 'sug8'];
 
 // A day key such as 2026-10-24, in local time.
 export const dayKey = (date: Date): string =>
@@ -22,7 +16,7 @@ export const addDays = (date: Date, n: number): Date => new Date(date.getFullYea
 // Three suggestions for the day, a different set each day, so the list does not feel stuck.
 export const suggestionsForDay = (date: Date, count = 3): string[] => {
   const start = Math.floor(new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() / 86400000);
-  return Array.from({ length: count }, (_, i) => SUGGESTIONS[(start + i) % SUGGESTIONS.length]);
+  return Array.from({ length: count }, (_, i) => t(SUGGESTIONS[(start + i) % SUGGESTIONS.length]));
 };
 
 // The text that goes into the timeline. A # in the intention would make a tracker, so it is left out.
