@@ -80,6 +80,12 @@
     });
     startSnapshots(plugin);
     onPrefsChange(plugin, () => applyNomieValues());
+    // Nomie's widget settings read the widgets this plugin offers from 'widgets' (id, name and emoji).
+    // This plugin offers one widget, so the list has one entry.
+    plugin.onRegistered(async () => {
+      await plugin.storage.init();
+      await plugin.storage.setItem('widgets', [{ widgetid: 'main', name: 'Intention', emoji: '🎯' }]);
+    });
     plugin.onRegistered(async () => {
       applyNomieValues();
       await load();
