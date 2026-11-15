@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { startSnapshots } from './snapshot';
   import { onMount } from 'svelte';
   import { dayKey, intentionNote, keptNote, prune, suggestionsForDay, weekSummary, type IntentionsByDay } from './logic';
   import { t, setLanguage, currentLanguage } from './i18n/index.svelte';
@@ -77,6 +78,7 @@
       addToMoreMenu: true,
       addToWidgets: true,
     });
+    startSnapshots(plugin);
     onPrefsChange(plugin, () => applyNomieValues());
     plugin.onRegistered(async () => {
       applyNomieValues();
